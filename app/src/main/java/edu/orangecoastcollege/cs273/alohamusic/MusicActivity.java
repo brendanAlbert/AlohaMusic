@@ -9,6 +9,15 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+/**
+ * MusicActivity is the second Controller of Aloha Music but it serves as the main part of the app.
+ *
+ * The usual connecting of Button widgets occurs.
+ *
+ * Two new types of Objects are the VideoView and MediaPlayer.
+ *
+ * VideoView is used to play videos and the MediaPlayer is used to play synchronous audio files.
+ */
 public class MusicActivity extends AppCompatActivity {
 
     // References to UI components
@@ -21,6 +30,27 @@ public class MusicActivity extends AppCompatActivity {
     MediaPlayer ukuleleMediaPlayer;
     MediaPlayer ipuMediaPlayer;
 
+    /**
+     * onCreate is called when the App first starts and also when the orientation
+     * of the device changes.
+     *
+     * The content view is set and widgets in the View are connected.
+     *
+     * When instantiating a MediaPlayer object, we call the static create method and
+     * pass it two parameters, the context (in this case 'this') and the R.raw resource
+     * we wish to associate with this MediaPlayer.
+     *
+     * Instantiating a VideoView involves labeling a Uniform Resource Identifier (URI).
+     * The three parts of a URI are: scheme, host and path.
+     * android.resource:// is the scheme
+     * the package name (edu.orangecoastcollege.cs273.alohamusic) is the path
+     * and the path is R.raw.ukulele or R.raw.ipu.
+     * We pass the URI to the setVideoURI method to instantiate the VideoView.
+     *
+     * We also instantiate and pass a new MediaController object to the setMediaController
+     * method.  This allows a user to play, pause, seek, and rewind to parts of the video.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +74,12 @@ public class MusicActivity extends AppCompatActivity {
         hulaVideoView.setMediaController(new MediaController(this));
     }
 
+    /**
+     * playMedia is called whenever the user taps any of the three buttons.
+     * Whether the button plays or pauses is handled in the switch statement.
+     * If a player is playing, the buttons for the other two players are hidden.
+     * @param v
+     */
     // Method will handle all 3 button clicks
     // Use the button id to see which was clicked
     public void playMedia(View v)
@@ -107,9 +143,14 @@ public class MusicActivity extends AppCompatActivity {
         }
     }
 
-    // Override onStop method to release MediaPlayes
+    // Override onStop method to release MediaPlayers
     // Prevent memory leaks
 
+    /**
+     * onStop is called whenever an activity becomes invisible or is finished.
+     * For example, when the user rotates the device.  onStop is called and releases
+     * the memory for the two MediaPlayers before more are created in onCreate.
+     */
     @Override
     protected void onStop() {
         super.onStop();
